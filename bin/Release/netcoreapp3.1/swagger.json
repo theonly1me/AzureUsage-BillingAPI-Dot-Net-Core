@@ -1,0 +1,33 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "AzureClientWebAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/getusage": {
+      "get": {
+        "tags": [
+          "AzureUsage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/getratecard": {
+      "get": {
+        "tags": [
+          "AzureUsage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  }
+}

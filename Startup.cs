@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AzureClientWebAPI.Auth;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,10 @@ namespace AzureClientWebAPI
 {
     public class Startup
     {
-        
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;        
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -30,8 +31,19 @@ namespace AzureClientWebAPI
         {
             services.AddControllers();
             services.AddMvc();
-            services.AddSingleton<IAzureAuth, AzureAuth>();
-            
+            services.AddSingleton<IAzureService, AzureService>();
+
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();            
+            services.AddCors(o =>
+            {
+                o.AddPolicy("corspolicy", corsBuilder.Build());
+            });
+            services.AddSwaggerGen();
+
+
             string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
             services.AddHttpClient();
         }
@@ -49,6 +61,7 @@ namespace AzureClientWebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors("corspolicy");
 
             app.UseEndpoints(endpoints =>
             {
