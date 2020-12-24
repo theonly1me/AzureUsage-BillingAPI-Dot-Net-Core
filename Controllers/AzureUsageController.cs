@@ -17,7 +17,7 @@ namespace AzureClientWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/getusage")]
+        [Route("getusage")]
         public IActionResult GetUsage()
         {
             //Using the Microsoft Azure Fluent API
@@ -31,7 +31,7 @@ namespace AzureClientWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/getratecard")]
+        [Route("getratecard")]
         public IActionResult GetRateCardDetails()
         {
             RateCardPayload rateCardPayload = _azureService.GetRateCardDetails();

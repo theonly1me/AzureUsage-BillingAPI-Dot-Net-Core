@@ -41,8 +41,15 @@ namespace AzureClientWebAPI
             {
                 o.AddPolicy("corspolicy", corsBuilder.Build());
             });
-            services.AddSwaggerGen();
 
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "AzureClientWebAPI",
+                    Version = "v1"
+                });
+            });
 
             string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
             services.AddHttpClient();

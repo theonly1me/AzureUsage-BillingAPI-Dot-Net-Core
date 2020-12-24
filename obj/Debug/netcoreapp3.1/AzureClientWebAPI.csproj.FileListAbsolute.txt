@@ -55,3 +55,8 @@ C:\Users\pulav\Documents\Apps\AzureClientWebAPI\obj\Debug\netcoreapp3.1\AzureCli
 C:\Users\pulav\Documents\Apps\AzureClientWebAPI\obj\Debug\netcoreapp3.1\AzureClientWebAPI.pdb
 C:\Users\pulav\Documents\Apps\AzureClientWebAPI\obj\Debug\netcoreapp3.1\AzureClientWebAPI.genruntimeconfig.cache
 C:\Users\pulav\Documents\Apps\AzureClientWebAPI\obj\Debug\netcoreapp3.1\AzureClientWebAPI.csprojAssemblyReference.cache
+C:\Users\pulav\Documents\Apps\AzureClientWebAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\pulav\Documents\Apps\AzureClientWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\pulav\Documents\Apps\AzureClientWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\pulav\Documents\Apps\AzureClientWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\pulav\Documents\Apps\AzureClientWebAPI\obj\Debug\netcoreapp3.1\AzureClientWebAPI.MvcApplicationPartsAssemblyInfo.cs

@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using AzureClientWebAPI.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace AzureClientWebAPI.Auth
 {
@@ -19,16 +20,18 @@ namespace AzureClientWebAPI.Auth
 
     public class AzureService : IAzureService
     {
-        string clientID = Environment.GetEnvironmentVariable("Azure_Client_ID", EnvironmentVariableTarget.User);
-        string clientSecret = Environment.GetEnvironmentVariable("Azure_Client_Secret", EnvironmentVariableTarget.User);
-        string tenantID = Environment.GetEnvironmentVariable("Azure_Tenant_ID", EnvironmentVariableTarget.User);
-        string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
-
         private readonly System.Net.Http.IHttpClientFactory _clientFactory;
-        public AzureService(System.Net.Http.IHttpClientFactory clientFactory)
+        private static IConfiguration _configuration;
+        public AzureService(System.Net.Http.IHttpClientFactory clientFactory, IConfiguration configuration)
         {
             _clientFactory = clientFactory;
+            _configuration = configuration;
         }
+
+        string clientID = _configuration["Auth:clientId"];
+        string clientSecret = _configuration["Auth:clientSecret"];
+        string tenantID = _configuration["Auth:subscriptionId"];
+        string subscriptionID = _configuration["Auth:tenantId"];
 
         public Microsoft.Azure.Management.Fluent.IAzure Authenticate()
         {
