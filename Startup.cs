@@ -30,7 +30,7 @@ namespace AzureClientWebAPI
         {
             services.AddControllers();
             services.AddMvc();
-            services.AddSingleton<IAzureAuth, AzureAuth>();
+            services.AddSingleton<IAzureService, AzureService>();
             
             string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
             services.AddHttpClient();

@@ -1,22 +1,24 @@
 ﻿using System.Threading.Tasks;
 using AzureClientWebAPI.Auth;
+using AzureClientWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace AzureClientWebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("azure")]
     public class AzureUsageController : ControllerBase
     {
-        private readonly IAzureAuth _azureAuth;
+        private readonly IAzureService _azureAuth;
 
-        public AzureUsageController(ILogger<AzureUsageController> logger, IAzureAuth azureAuth)
+        public AzureUsageController(ILogger<AzureUsageController> logger, IAzureService azureAuth)
         {        
             _azureAuth = azureAuth;
         }
 
         [HttpGet]
+        [Route("getusage")]
         public async Task<IActionResult> GetUsage()
         {
             //Using the Microsoft Azure Fluent API
@@ -27,6 +29,18 @@ namespace AzureClientWebAPI.Controllers
             UsagePayload usagePayload = _azureAuth.GetUsageDetails();
 
             return Ok(usagePayload);
+
+            
+        }
+
+        [HttpGet]
+        [Route("getratecard")]
+        public IActionResult GetRateCardDetails()
+        {
+            RateCardPayload rateCardPayload = _azureAuth.GetRateCardDetails();
+
+            return Ok(rateCardPayload);
+
         }
     }
 }

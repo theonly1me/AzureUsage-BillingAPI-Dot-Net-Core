@@ -5,16 +5,18 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using AzureClientWebAPI.Models;
 
 namespace AzureClientWebAPI.Auth
 {
-    public interface IAzureAuth
+    public interface IAzureService
     {
         Microsoft.Azure.Management.Fluent.IAzure Authenticate();
         public UsagePayload GetUsageDetails();
+        public RateCardPayload GetRateCardDetails();
     }
 
-    public class AzureAuth : IAzureAuth
+    public class AzureService : IAzureService
     {
         string clientID = Environment.GetEnvironmentVariable("Azure_Client_ID", EnvironmentVariableTarget.User);
         string clientSecret = Environment.GetEnvironmentVariable("Azure_Client_Secret", EnvironmentVariableTarget.User);
@@ -22,7 +24,7 @@ namespace AzureClientWebAPI.Auth
         string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
 
         private readonly System.Net.Http.IHttpClientFactory _clientFactory;
-        public AzureAuth(System.Net.Http.IHttpClientFactory clientFactory)
+        public AzureService(System.Net.Http.IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
@@ -77,6 +79,42 @@ namespace AzureClientWebAPI.Auth
             {
                 Console.WriteLine(String.Format("{0} \n\n{1}", e.Message, e.InnerException != null ? e.InnerException.Message : ""));
                 Console.ReadLine();
+            }
+
+            return payload;
+        }
+
+        public RateCardPayload GetRateCardDetails()
+        {
+            string token = GetAuthToken(clientID, clientSecret, tenantID);
+
+            string requestURL = String.Format("{0}/{1}/{2}/{3}",
+                      "https://management.azure.com",
+                      "subscriptions",
+                      subscriptionID,
+                      "providers/Microsoft.Commerce/RateCard?api-version=2016-08-31-preview&$filter=OfferDurableId eq 'MS-AZR-0044P' and Currency eq 'USD' and Locale eq 'en-US' and RegionInfo eq 'IN'");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestURL);
+
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
+            request.ContentType = "application/json";
+            RateCardPayload payload = new RateCardPayload();
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                var rateCardResponse = readStream.ReadToEnd();
+
+                payload = JsonConvert.DeserializeObject<RateCardPayload>(rateCardResponse);
+                response.Close();
+                readStream.Close();
+            }
+            catch (WebException webEx)
+            {
+                var resp = webEx.Response;
+                var responseDetails = (new System.IO.StreamReader(resp.GetResponseStream(), true)).ReadToEnd();
+                Console.WriteLine(responseDetails);
             }
 
             return payload;
