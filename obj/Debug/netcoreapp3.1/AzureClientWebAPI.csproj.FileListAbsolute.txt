@@ -111,3 +111,5 @@ C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\obj\Debug\netco
 C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\obj\Debug\netcoreapp3.1\AzureClientWebAPI.dll
 C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\obj\Debug\netcoreapp3.1\AzureClientWebAPI.pdb
 C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\obj\Debug\netcoreapp3.1\AzureClientWebAPI.genruntimeconfig.cache
+C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\obj\Debug\netcoreapp3.1\AzureClientWebAPI.csprojAssemblyReference.cache
+C:\Users\pulav\Documents\Apps\AzureUsage-BillingAPI-Dot-Net-Core\bin\Debug\netcoreapp3.1\CsvHelper.dll

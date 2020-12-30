@@ -45,6 +45,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[12.3.2, )"
+            },
             "Microsoft.Azure.Management.Fluent": {
               "target": "Package",
               "version": "[1.36.1, )"
@@ -56,6 +60,10 @@
             "Microsoft.IdentityModel.Clients.ActiveDirectory": {
               "target": "Package",
               "version": "[5.2.8, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             },
             "System.Text.Json": {
               "target": "Package",

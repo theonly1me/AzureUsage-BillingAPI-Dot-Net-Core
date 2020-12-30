@@ -2,12 +2,20 @@
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text;
+using AzureClientWebAPI.Models;
+using System.Data;
+using Newtonsoft.Json;
+using System.IO;
+using CsvHelper;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace AzureClientWebAPI.Auth
 {
     public interface IAzureService
-    {                
-        public Task<string> GetResponse(string apiURL);        
+    {
+        public Task<string> GetResponse(string apiURL, string method);
     }
 
     public class AzureService : IAzureService
@@ -18,9 +26,9 @@ namespace AzureClientWebAPI.Auth
          * Azure Details         
          */
 
-        private string clientID = "YOUR_CLIENT_ID";
-        private string clientSecret = "YOUR_CLIENT_SECRET";
-        private string tenantID = "YOUR_TENANT_ID";               
+        private string clientID = "aff7648e-d0d7-4734-af73-ea7f95efebcc";
+        private string clientSecret = "oHLmFHkEGQSlpvci4a1lK9KO.nRLXBgRB.";
+        private string tenantID = "96738e78-7538-4c8f-a5e9-1e49901e42af";
         #endregion
 
         #region Generate Auth Token
@@ -36,11 +44,11 @@ namespace AzureClientWebAPI.Auth
             }
 
             return result.Result.AccessToken;
-        }    
+        }
         #endregion
 
         #region Azure Rest API Helpers      
-        public async Task<string> GetResponse(string apiURL)
+        public async Task<string> GetResponse(string apiURL, string method)
         {
             string token = GetAuthToken(clientID, clientSecret, tenantID);
             HttpClient client = new HttpClient();
@@ -48,20 +56,26 @@ namespace AzureClientWebAPI.Auth
             client.BaseAddress = new Uri(apiURL);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, client.BaseAddress);
-            try
+
+            if (method == "GET")
             {
-                response = await MakeRequestAsync(request, client);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, client.BaseAddress);
+                response = await GetRequestAsync(request, client);
             }
-            catch (Exception e)
+            else if (method == "POST")
             {
-                Console.WriteLine(e);
+                var payload = CostManagementQuery.requestByTagPayload;
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, client.BaseAddress);
+                request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+                response = await PostRequestAsync(request, client);
             }
+            
+            //string csv = jsonToCSV(response, ",");
 
             return response;
         }
 
-        public static async Task<string> MakeRequestAsync(HttpRequestMessage getRequest, HttpClient client)
+        public static async Task<string> GetRequestAsync(HttpRequestMessage getRequest, HttpClient client)
         {
             var response = await client.SendAsync(getRequest).ConfigureAwait(false);
             var responseString = string.Empty;
@@ -77,6 +91,61 @@ namespace AzureClientWebAPI.Auth
 
             return responseString;
         }
-        #endregion        
+
+        public static async Task<string> PostRequestAsync(HttpRequestMessage postRequest, HttpClient client)
+        {
+            var response = await client.SendAsync(postRequest);
+            var responseString = string.Empty;
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e);
+            }
+            return responseString;
+        }
+        #endregion
+
+        #region JSON to csv Helper Methods
+        public static DataTable jsonStringToTable(string jsonContent)
+        {
+            DataTable dt = JsonConvert.DeserializeObject<DataTable>(jsonContent);
+            return dt;
+        }
+
+        public static string jsonToCSV(string jsonContent, string delimiter)
+        {
+            StringWriter csvString = new StringWriter();
+            using (var csv = new CsvWriter(csvString))
+            {
+                //csv.Configuration.SkipEmptyRecords = true;
+                //csv.Configuration.WillThrowOnMissingField = false;
+                csv.Configuration.Delimiter = delimiter;
+
+                using (var dt = jsonStringToTable(jsonContent))
+                {
+                    foreach (DataColumn column in dt.Columns)
+                    {
+                        csv.WriteField(column.ColumnName);
+                    }
+                    csv.NextRecord();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        for (var i = 0; i < dt.Columns.Count; i++)
+                        {
+                            csv.WriteField(row[i]);
+                        }
+                        csv.NextRecord();
+                    }
+                }
+            }
+            return csvString.ToString();
+        }
+
+        #endregion
     }
 }
