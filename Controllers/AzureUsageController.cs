@@ -16,7 +16,7 @@ namespace AzureClientWebAPI.Controllers
             _azureAuth = azureAuth;
         }
 
-        private static string subscriptionId = "5f691259-4a3c-4a19-b794-17c2e5449bc0";
+        private static string subscriptionId = "YOUR_SUBSCRIPTION_ID";
 
         #region URIs
         /**
