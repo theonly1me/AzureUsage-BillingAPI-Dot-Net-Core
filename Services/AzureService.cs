@@ -26,9 +26,9 @@ namespace AzureClientWebAPI.Auth
          * Azure Details         
          */
 
-        private string clientID = "aff7648e-d0d7-4734-af73-ea7f95efebcc";
-        private string clientSecret = "oHLmFHkEGQSlpvci4a1lK9KO.nRLXBgRB.";
-        private string tenantID = "96738e78-7538-4c8f-a5e9-1e49901e42af";
+        private string clientID = "CLIENT_ID";
+        private string clientSecret = "CLIENT_SECRET";
+        private string tenantID = "TENANT_ID";
         #endregion
 
         #region Generate Auth Token
