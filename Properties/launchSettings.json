@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "azure/getusage",
+      "launchUrl": "api/v1/usage/subscription",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "AzureClientWebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "azure/getusage",
+      "launchUrl": "api/v1/usage/subscription",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

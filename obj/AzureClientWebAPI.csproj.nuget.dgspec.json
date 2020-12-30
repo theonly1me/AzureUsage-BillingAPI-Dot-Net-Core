@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pulav\\Documents\\Apps\\AzureClientWebAPI\\AzureClientWebAPI.csproj": {}
+    "C:\\Users\\pulav\\Documents\\Apps\\AzureUsage-BillingAPI-Dot-Net-Core\\AzureClientWebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pulav\\Documents\\Apps\\AzureClientWebAPI\\AzureClientWebAPI.csproj": {
+    "C:\\Users\\pulav\\Documents\\Apps\\AzureUsage-BillingAPI-Dot-Net-Core\\AzureClientWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pulav\\Documents\\Apps\\AzureClientWebAPI\\AzureClientWebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\pulav\\Documents\\Apps\\AzureUsage-BillingAPI-Dot-Net-Core\\AzureClientWebAPI.csproj",
         "projectName": "AzureClientWebAPI",
-        "projectPath": "C:\\Users\\pulav\\Documents\\Apps\\AzureClientWebAPI\\AzureClientWebAPI.csproj",
+        "projectPath": "C:\\Users\\pulav\\Documents\\Apps\\AzureUsage-BillingAPI-Dot-Net-Core\\AzureClientWebAPI.csproj",
         "packagesPath": "C:\\Users\\pulav\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pulav\\Documents\\Apps\\AzureClientWebAPI\\obj\\",
+        "outputPath": "C:\\Users\\pulav\\Documents\\Apps\\AzureUsage-BillingAPI-Dot-Net-Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",

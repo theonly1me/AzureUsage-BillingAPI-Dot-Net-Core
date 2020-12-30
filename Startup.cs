@@ -30,10 +30,8 @@ namespace AzureClientWebAPI
         {
             services.AddControllers();
             services.AddMvc();
-            services.AddSingleton<IAzureService, AzureService>();
-            
-            string subscriptionID = Environment.GetEnvironmentVariable("Azure_Subscription_ID", EnvironmentVariableTarget.User);
-            services.AddHttpClient();
+            services.AddSingleton<IAzureService, AzureService>();         
+            services.AddHttpClient();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
